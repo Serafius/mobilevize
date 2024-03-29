@@ -10,15 +10,16 @@ import 'guest_book_message.dart';
 import 'src/widgets.dart';
 
 class GuestBook extends StatefulWidget {
-  const GuestBook({
+  GuestBook({
     super.key,
     required this.addMessage,
     required this.messages,
+    required this.attend
   });
 
   final FutureOr<void> Function(String message) addMessage;
   final List<GuestBookMessage> messages;
-
+  bool attend;
   @override
   State<GuestBook> createState() => _GuestBookState();
 }
@@ -68,10 +69,23 @@ class _GuestBookState extends State<GuestBook> {
                     ],
                   ),
                 ),
+                
               ],
             ),
           ),
+          
         ),
+        const SizedBox(height: 8,),
+                Row(
+                  children: [
+                    Text("Attend"),
+                    Checkbox(value: widget.attend, onChanged: ((value) {
+                      setState(() {
+                        widget.attend = value!;
+                      });
+                    }))
+                  ],
+                ),
         const SizedBox(height: 8),
         for (var message in widget.messages)
           Paragraph('${message.name}: ${message.message}'),
